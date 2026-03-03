@@ -1,3 +1,7 @@
+## Version 0.3.2
+
+-   created own repo by forking group repository 
+
 ## Version 0.3.1
 
 -   retrospectively created this changelog file
