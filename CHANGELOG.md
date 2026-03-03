@@ -1,3 +1,9 @@
+## Version 0.3.3
+
+- updated README
+- added my own Google Doc with the supplementary tables
+- started working on the manuscript 
+
 ## Version 0.3.2
 
 -   created own repo by forking group repository 
