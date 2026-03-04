@@ -14,12 +14,13 @@ IC_function <- function(anonymity) {
   return(comp)
 }
 
-# Überprüfung mit Vektor
-an <- c(0.2, 0.5, 0.8)
-IC_function(an)
-
+## Überprüfung mit Vektor
+vector <- c(0.2, 0.5, 0.8)
+IC_function(vector)
 base_resp <- 0.8
 
+
+#--------------------------------------------------------------------
 #' Felt responsibility as a function of identity compartmentalization
 #'
 #' Felt responsibility is modeled as a decreasing, non-linear function of
@@ -38,11 +39,11 @@ FR_function <- function(comp, base_resp) {
   return(feltresp)
 }
 
+## Überprüfung mit Vektor
+FR_function(vector,base_resp = 0.8)
 
-# Überprüfung mit Vektor
-FR_function(an,base_resp = 0.8)
 
-
+#---------------------------------------------------------------------
 #' Calculate concern about impression on others from number of interpersonal cues
 #'
 #' Concern about impression on others is modeled as a direct function of the
@@ -59,11 +60,11 @@ CAI_function <- function(cues) {
   return(concern)
 }
 
+## Überprüfung mit Vektor
+CAI_function(vector)
 
-# Überprüfung mit Vektor
-CAI_function(an)
 
-
+#--------------------------------------------------------------------
 #' Calculate courage to express oneself from concern about impression on others
 #'
 #' Courage to express oneself is modeled as an inverse function of concern about
@@ -80,8 +81,10 @@ CE_function <- function(concern) {
 }
 
 # Überprüfung mit Vektor 
-CE_function(an)
+CE_function(vector)
 
+
+#---------------------------------------------------------------------
 #' Calculate state disinhibition
 #'
 #' State disinhibition is modeled as a linear combination of measure of online disinhibition (MOD),
@@ -102,6 +105,8 @@ SD_function <- function(feltresp, courage, MOD) {
   return(state_dis)
 }
 
+
+#--------------------------------------------------------------------
 #' Calculate the percentage of sentences containing at least one curse word
 #'
 #' Transforms state disinhibition into an observed outcome with added
@@ -131,6 +136,8 @@ curse_function <- function(anonymity, cues, MOD, base_resp) {
   return(bad_sentence_percentage)
 }
 
+#---------------------------------------------------------------------
+# trying out a first plot
 library(ggplot2)
 df <- expand.grid(
   anonymity = c(0, 0.5, 1),
