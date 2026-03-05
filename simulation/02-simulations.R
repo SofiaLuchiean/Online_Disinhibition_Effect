@@ -9,7 +9,7 @@ df <- expand.grid(
   cues = c(0, 0.5, 1)
 )
 
-df$MOD <- rtruncnorm(n = nrow(df), a = 1, b = 5, mean = 2.9, sd = 1.16)
+df$MOD <- rbeta(nrow(df), 1.6, 1.7)*4 + 1 
 
 df$base_resp <- rbeta(nrow(df), 4, 1.5)
 
