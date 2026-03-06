@@ -130,7 +130,7 @@ curse_function <- function(anonymity, cues, MOD, base_resp) {
   concern <- CAI_function(cues)
   courage <- CE_function(concern)
   state_dis <- SD_function(feltresp, courage, MOD)
-  bad_sentence_percentage <- (state_dis + 0.1)/1.3 + rnorm(length(state_dis), mean = 0, sd = 0.1)
+  bad_sentence_percentage <- (state_dis + 0.1)/1.3 + rnorm(length(state_dis), mean = 0, sd = 0.05)
   bad_sentence_percentage[bad_sentence_percentage > 1] <- 1
   bad_sentence_percentage[bad_sentence_percentage < 0] <- 0
   return(bad_sentence_percentage)
