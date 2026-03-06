@@ -1,3 +1,8 @@
+## Version 0.3.4
+
+- minor changes in simulation
+- added MOD plot
+
 ## Version 0.3.3
 
 - updated README
