@@ -42,7 +42,7 @@ SD_beta <- SD/4
 
 ## plot
 alpha <- 6.6
-beta  <- 1.3
+beta  <- 1.38
 curve(dbeta(x, alpha, beta),
       from = 0, to = 1, 
       ylab = "density", 
