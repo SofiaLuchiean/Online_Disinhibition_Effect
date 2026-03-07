@@ -1,3 +1,9 @@
+## Version 0.4.0
+
+- plotted base responsibility distribution based on existing empirical data
+- added corresponding beta-distribution
+- changed simulated base responsibility values in /02-simulations.R
+
 ## Version 0.3.4
 
 - minor changes in simulation
