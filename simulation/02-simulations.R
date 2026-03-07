@@ -11,7 +11,7 @@ df <- expand.grid(
 
 df$MOD <- round((rbeta(nrow(df), 1.6, 1.7)*4 + 1), 2) #simulated MOD values
 
-df$base_resp <- round(rbeta(nrow(df), 4, 1.5), 2) #simulated base responsibility values
+df$base_resp <- round(rbeta(nrow(df), 6.6, 1.38), 2) #simulated base responsibility values
 
 df$bad_sentence_percentage <- round(curse_function(df$anonymity, df$cues, df$MOD, df$base_resp),2) #simulated disinhibited behavior
 
