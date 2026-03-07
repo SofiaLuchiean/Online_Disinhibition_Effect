@@ -12,7 +12,7 @@ source("simulation/01-functions.R")
 df_iop <- expand.grid(
   anonymity = c(0, 0.5, 1),
   cues = c(0, 0.5, 1),
-  MOD = c(1, 3, 5),
+  MOD = 2.9, #mean based on results from validation study
   base_resp = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
 )
 
@@ -26,7 +26,7 @@ df_iop$bad_sentence_percentage <- round(psi_function(
 
 ## plot for visualisation
 ggplot(df_iop, aes(x= anonymity, y = bad_sentence_percentage, color = factor(cues))) +
-  facet_grid(base_resp ~ MOD) +
+  facet_wrap(~ base_resp) +
   geom_line() +
   labs(
     x="Anonymity",
