@@ -1,3 +1,12 @@
+## Version 0.5.0
+
+- new analyses (hypothesis tests & effect sizes) with MOD included as predictor
+- changed folder names
+- added script for deterministic model and additional analyses
+- plotted deterministic model
+- reworked plot for simulated data
+
+
 ## Version 0.4.0
 
 - plotted base responsibility distribution based on existing empirical data
