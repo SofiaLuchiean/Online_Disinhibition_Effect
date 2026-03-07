@@ -1,4 +1,4 @@
-source("simulation/02-simulations.R")
+source("simulation/03-simulations.R")
 
 library(multcomp)
 library(MBESS)
