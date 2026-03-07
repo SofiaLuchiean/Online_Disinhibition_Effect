@@ -17,8 +17,6 @@ IC_function <- function(anonymity) {
 ## Überprüfung mit Vektor
 vector <- c(0.2, 0.5, 0.8)
 IC_function(vector)
-base_resp <- 0.8
-
 
 #--------------------------------------------------------------------
 #' Felt responsibility as a function of identity compartmentalization
@@ -106,6 +104,36 @@ SD_function <- function(feltresp, courage, MOD) {
 }
 
 
+#---------------------------------------------------------------------
+#' Calculate state disinhibition as a psi-function
+#'
+#' State disinhibition is modeled as the outcome variable of all
+#' exogenous variables. This function shows how the model would behave 
+#' if it was deterministic
+#'
+#' @param anonymity The degree of anonymity, on a scale from 0 to 1.
+#'                 
+#' @param cues The number of interpersonal cues, on a scale from 0 to 1.
+#'                
+#' @param MOD measure of online disinhibition (MOD), on a scale from 1 to 5.
+#'      
+#' @param base_resp The baseline felt responsibility when compartmentalization is zero,
+#'                  on a scale from 0 to 1.
+#' 
+#' 
+#' @return The state disinhibition score for the given parameters, on a scale from 0 to 1.
+
+psi_function <- function(anonymity, cues, MOD, base_resp) {
+  comp <- IC_function(anonymity)
+  feltresp <- FR_function(comp, base_resp)
+  concern <- CAI_function(cues)
+  courage <- CE_function(concern)
+  state_dis <- SD_function(feltresp, courage, MOD)
+  state_dis_lt <- (state_dis + 0.1)/1.3  #linear transformation
+  return(state_dis_lt)
+}
+
+
 #--------------------------------------------------------------------
 #' Calculate the percentage of sentences containing at least one curse word
 #'
@@ -130,29 +158,8 @@ curse_function <- function(anonymity, cues, MOD, base_resp) {
   concern <- CAI_function(cues)
   courage <- CE_function(concern)
   state_dis <- SD_function(feltresp, courage, MOD)
-  bad_sentence_percentage <- (state_dis + 0.1)/1.3 + rnorm(length(state_dis), mean = 0, sd = 0.05)
+  bad_sentence_percentage <- (state_dis + 0.1)/1.3 + rnorm(length(state_dis), mean = 0, sd = 0.1)
   bad_sentence_percentage[bad_sentence_percentage > 1] <- 1
   bad_sentence_percentage[bad_sentence_percentage < 0] <- 0
   return(bad_sentence_percentage)
 }
-
-#---------------------------------------------------------------------
-# trying out a first plot
-library(ggplot2)
-df <- expand.grid(
-  anonymity = c(0, 0.5, 1),
-  MOD = c(1, 3, 5),
-  cues = c(0, 0.5, 1),
-  base_resp = c(0.5, 0.9)
-)
-
-df$bad_sentence_percentage <- curse_function(df$anonymity, df$cues, df$MOD, df$base_resp)
-
-ggplot(df, aes(x= anonymity, y = bad_sentence_percentage, color = factor(cues))) +
-  facet_grid(MOD ~ base_resp) +
-  geom_point() + 
-  geom_line()
-
-
-
-
