@@ -27,8 +27,7 @@ IC_function(vector)
 #'
 #' @param comp The degree of identity compartmentalization, on a scale from 0 to 1.
 #'            
-#' @param base_resp The baseline felt responsibility when compartmentalization is zero,
-#'                  on a scale from 0 to 1.
+#' @param base_resp The baseline tendency to assume responsibility for one's actions on a scale from 0 to 1.
 #'
 #' @return The felt responsibility for the given parameters, on a scale from 0 to 1.
 
@@ -38,7 +37,7 @@ FR_function <- function(comp, base_resp) {
 }
 
 ## Überprüfung mit Vektor
-FR_function(vector,base_resp = 0.8)
+FR_function(vector,vector)
 
 
 #---------------------------------------------------------------------
