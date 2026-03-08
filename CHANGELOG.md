@@ -1,3 +1,8 @@
+## Version 0.6.1
+
+- updated VAST to include base_resp
+
+
 ## Version 0.6.0
 
 - removed MOD from analyses
