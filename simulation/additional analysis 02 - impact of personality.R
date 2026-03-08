@@ -1,12 +1,13 @@
-# goal: systematically analyze how the parameter base responsibility 
-# (base_resp) impacts the phenomenon being produced by the formal model
+# goal: analyze how the parameter base responsibility (base_resp) 
+# impacts the phenomenon being produced by the formal model
 # question: for which values of base_resp does the model (still) produce 
 # the phenomenon in a simulated experiment?
 
 library(ggplot2)
+library(multcomp)
 source("simulation/01-functions.R")
 
-# deterministic model
+# 1. deterministic model
 ## define levels to be plotted 
 ## covering the entire range of base_resp in small intervals
 df_det <- expand.grid(
@@ -28,17 +29,21 @@ df_det$state_disinhibition <- round(psi_function(
 ggplot(df_det, aes(x= anonymity, y = state_disinhibition, color = factor(cues))) +
   facet_wrap(~ base_resp) +
   geom_line() +
+  geom_point() +
   labs(
     x="Anonymity",
-    y="Bad sentence percentage",
+    y="State Disinhibition",
     color="Interpersonal cues"
   ) +
   theme_bw()
 
+## the deterministic model always produces the effect, since base_resp has no influence
+## on the main effect of cues, which is built into the mathematical model 
+
 # -------------------------------------------------------------------
 
-# simulation of an experiment for different base_resp values
-n = 10  # number of individuals per condition
+# 2. simulation of an experiment for different base_resp values
+n = 30  # number of individuals per condition
 df_exp <- expand.grid(
   id = 1:n,
   anonymity = c(0.2, 0.8),
@@ -48,22 +53,7 @@ df_exp <- expand.grid(
 df_exp$MOD <- round((rbeta(nrow(df_exp), 1.6, 1.7)*4 + 1), 2) 
 df_exp$bad_sentence_percentage <- round(curse_function(df_exp$anonymity, df_exp$cues, df_exp$MOD, df_exp$base_resp),2) 
 
-
-# barplot visualisation
-ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, fill = factor(cues))) +
-  stat_summary(
-    fun = mean, geom = "bar",
-    position = position_dodge(width = 0.9)
-  ) +
-  facet_wrap(~ base_resp) +
-  labs(
-    x = "Anonymity",
-    y = "Bad sentence percentage",
-    fill = "cues"
-  ) +
-  theme_bw()
-
-#boxplot visualisation
+## boxplot visualisation
 ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, color = factor(cues)))+
   geom_boxplot() + 
   facet_wrap(~ base_resp)
@@ -75,8 +65,14 @@ ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, color = f
   theme_bw()
 
 
-# statistical analysis
-## which values of base responsibility still produce the phenomenon?
+# 3. statistical analysis
+## which values of base responsibility (still) produce the phenomenon?
+
+## create empty table for results
+df_results <- data.frame(
+   base_resp = numeric(0),
+   significance = logical(0)
+)
 
 ## null hypotheses 
 hyps_less <- c("anonymity <= 0")
@@ -87,13 +83,7 @@ alpha <- 0.05
 N <- 3   # as there is three individual hypotheses being tested
 alpha_adj <- alpha / N
 
-# create empty table for results
-df_results <- data.frame(
-  base_resp = numeric(0),
-  significance = logical(0)
-)
-
-# created a function for statistical analysis:
+## created a function for statistical analysis:
 #' Test composite hypothesis for a given base_resp value
 #' 
 #' This function evaluates whether the phenomenon of online disinhibition
@@ -119,7 +109,7 @@ df_results <- data.frame(
 significance_test <- function(df, base_resp_value, alpha_adj) {
   
   # select only data for the desired base_resp
-  # rounded to prevent errors with floating-point numbers
+  # allowing small tolerance to prevent errors with floating numbers
   df_exp_subset <- df[abs(df$base_resp - base_resp_value) < 1e-8, ]
   
   # fit model
@@ -150,6 +140,37 @@ significance_test <- function(df, base_resp_value, alpha_adj) {
   return(significance)
 }
 
+## testing for multiple base_resp values
+### specify base_resp values from the dataframe
+br_values <- seq(0, 1, by = 0.1)
 
+### set up dataframe for results
+df_results <- data.frame(base_resp = br_values) 
 
+### simulations
+n_sim <- 100   # number of simulation runs
+
+for (i in 1:n_sim) {
+  # simulate new data for each iteration 
+  df_exp <- expand.grid(
+    id = 1:n, 
+    anonymity = c(0.2, 0.8),
+    cues = c(0.2, 0.8),
+    base_resp = seq(0, 1, by = 0.1)
+  )
+  df_exp$MOD <- round((rbeta(nrow(df_exp), 1.6, 1.7)*4 + 1), 2) 
+  df_exp$bad_sentence_percentage <- round(curse_function(df_exp$anonymity, df_exp$cues, df_exp$MOD, df_exp$base_resp),2) 
+  
+  # test significance for each base_resp 
+  results <- sapply(br_values, function(b) {
+    significance_test(df_exp, b, alpha_adj)
+  })
+  
+  # add results as a new column for each simulation iteration
+  df_results[[paste0("Significance test ", i)]] <- results
+}
+
+### compute the percentage of TRUE per row
+sim_cols <- grep("^Significance test", names(df_results))
+df_results$TRUE_percentage <- rowMeans(df_results[, sim_cols])
 
