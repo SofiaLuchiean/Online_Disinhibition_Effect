@@ -1,31 +1,31 @@
 # goal: systematically analyze how the parameter base responsibility 
 # (base_resp) impacts the phenomenon being produced by the formal model
 # question: for which values of base_resp does the model (still) produce 
-# the phenomenon?
+# the phenomenon in a simulated experiment?
 
 library(ggplot2)
 source("simulation/01-functions.R")
 
-# simulation of the deterministic model
+# deterministic model
 ## define levels to be plotted 
 ## covering the entire range of base_resp in small intervals
-df_iop <- expand.grid(
-  anonymity = c(0, 0.5, 1),
-  cues = c(0, 0.5, 1),
-  MOD = 2.9, #mean based on results from validation study
-  base_resp = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
-)
+df_det <- expand.grid(
+  anonymity = c(0.2, 0.8),
+  cues = c(0.2, 0.8),
+  MOD = 2.9, # mean MOD-score in the population
+  base_resp = seq(0, 1, by = 0.1)
+  )
 
-## compute state disinhibition 
-df_iop$bad_sentence_percentage <- round(psi_function(
-  df_iop$anonymity, 
-  df_iop$cues, 
-  df_iop$MOD, 
-  df_iop$base_resp
+## compute state online disinhibition
+df_det$state_disinhibition <- round(psi_function(
+  df_det$anonymity, 
+  df_det$cues, 
+  df_det$MOD, 
+  df_det$base_resp
 ),2) 
 
 ## plot for visualisation
-ggplot(df_iop, aes(x= anonymity, y = bad_sentence_percentage, color = factor(cues))) +
+ggplot(df_det, aes(x= anonymity, y = state_disinhibition, color = factor(cues))) +
   facet_wrap(~ base_resp) +
   geom_line() +
   labs(
@@ -36,42 +36,50 @@ ggplot(df_iop, aes(x= anonymity, y = bad_sentence_percentage, color = factor(cue
   theme_bw()
 
 
-# simulation of the phenomenon for different base_resp values
+# simulation of an experiment for different base_resp values
 n = 10
-
-## base_resp = 0
-df_br_0 <- expand.grid(
-  id = 1:n,
-  anonymity = c(0, 0.5, 1),
-  cues = c(0, 0.5, 1),
-  base_resp = 0
-)
-df_br_0$MOD <- round((rbeta(nrow(df_br_0), 1.6, 1.7)*4 + 1), 2) 
-df_br_0$bad_sentence_percentage <- round(curse_function(df_br_0$anonymity, df_br_0$cues, df_br_0$MOD, df_br_0$base_resp),2) 
-
-
-
-# barplot visualisation
-n = 10
-df_barplot <- expand.grid(
+df_exp <- expand.grid(
   id = 1:n,
   anonymity = c(0.2, 0.8),
   cues = c(0.2, 0.8),
-  base_resp = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+  base_resp = seq(0, 1, by = 0.1)
 )
-df_barplot$MOD <- round((rbeta(nrow(df_barplot), 1.6, 1.7)*4 + 1), 2) 
-df_barplot$bad_sentence_percentage <- round(curse_function(df_barplot$anonymity, df_barplot$cues, df_barplot$MOD, df_barplot$base_resp),2) 
+df_exp$MOD <- round((rbeta(nrow(df_exp), 1.6, 1.7)*4 + 1), 2) 
+df_exp$bad_sentence_percentage <- round(curse_function(df_exp$anonymity, df_exp$cues, df_exp$MOD, df_exp$base_resp),2) 
 
-ggplot(df_barplot, aes(x = factor(base_resp), y = bad_sentence_percentage, fill = factor(cues))) +
+
+# barplot visualisation
+ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, fill = factor(cues))) +
   stat_summary(
     fun = mean, geom = "bar",
     position = position_dodge(width = 0.9)
   ) +
-  facet_wrap(~ anonymity, ncol = 1) +
+  facet_wrap(~ base_resp) +
   labs(
-    x = "Base responsibility",
+    x = "Anonymity",
     y = "Bad sentence percentage",
     fill = "cues"
   ) +
   theme_bw()
 
+#boxplot visualisation
+ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, color = factor(cues)))+
+  geom_boxplot() + 
+  facet_wrap(~ base_resp)
+  labs(
+    x="Anonymity",
+    y="Bad sentence percentage",
+    color="Interpersonal cues"
+  ) +
+  theme_bw()
+
+# statistical analysis
+## testing to see for which values of base responsibility the model still
+## shows a main effect of anonymity and invisibility as well as an
+## interaction effect
+  
+
+
+  
+  
+  
