@@ -1,3 +1,11 @@
+## Version 0.6.0
+
+- removed MOD from analyses
+- added alpha level correction
+- wrote significance_test function
+- minor changes in commentary
+
+
 ## Version 0.5.0
 
 - new analyses (hypothesis tests & effect sizes) with MOD included as predictor
