@@ -17,16 +17,27 @@ df$bad_sentence_percentage <- round(curse_function(df$anonymity, df$cues, df$MOD
 
 
 # 2. plots with simulated data
-p1 = ggplot(df, aes(x= anonymity, y = bad_sentence_percentage, color = factor(cues))) +
+p1 = ggplot(df, aes(x = anonymity, y = bad_sentence_percentage, color = factor(cues))) +
   stat_summary(fun.data = mean_cl_normal, geom = "pointrange",
                position = position_dodge(width = 0.1)) +
   stat_summary(fun = mean, geom = "line",
                position = position_dodge(width = 0.1)) +
   theme_minimal()
-print(p1) # original plot, with only anonymity and cues and IV 
-# --> kann eigentlich raus, behlte ihn nur für das Beispiel stat_summary
+print(p1) # original plot, with only anonymity and cues as IV showing 
+          #the mean differences between groups
 
-p2 = ggplot(df, aes(x= MOD, y = bad_sentence_percentage, color = factor(cues))) +
+p2 = ggplot(df, aes(x = factor(anonymity), y = bad_sentence_percentage, color = factor(cues)))+
+  geom_boxplot() + 
+  labs(
+    x="Anonymity",
+    y="Bad sentence percentage",
+    color="Interpersonal cues"
+  ) +
+  theme_bw()
+print(p2) # box plot for visualizing distribution of the outcome 
+          # variable between groups
+
+p3 = ggplot(df, aes(x= MOD, y = bad_sentence_percentage, color = factor(cues))) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   facet_wrap(~ anonymity) + 
@@ -38,4 +49,4 @@ p2 = ggplot(df, aes(x= MOD, y = bad_sentence_percentage, color = factor(cues))) 
     color="Interpersonal cues"
   ) +
   theme_bw()
-print(p2) 
+print(p3) # scatterplot with visualized MOD as predictor 
