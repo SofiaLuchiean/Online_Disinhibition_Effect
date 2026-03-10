@@ -56,7 +56,7 @@ df_exp$bad_sentence_percentage <- round(curse_function(df_exp$anonymity, df_exp$
 ## boxplot visualisation
 ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, color = factor(cues)))+
   geom_boxplot() + 
-  facet_wrap(~ base_resp)
+  facet_wrap(~ base_resp) +
   labs(
     x="Anonymity",
     y="Bad sentence percentage",
@@ -67,16 +67,6 @@ ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, color = f
 
 # 3. statistical analysis
 ## which values of base responsibility (still) produce the phenomenon?
-
-## create empty table for results
-df_results <- data.frame(
-   base_resp = numeric(0),
-   significance = logical(0)
-)
-
-## null hypotheses 
-hyps_less <- c("anonymity <= 0")
-hyps_greater <- c("cues >= 0", "anonymity:cues >= 0")
 
 ## corrected alpha level for multiple testing
 alpha <- 0.05
@@ -145,10 +135,10 @@ significance_test <- function(df, base_resp_value, alpha_adj) {
 br_values <- seq(0, 1, by = 0.1)
 
 ### set up dataframe for results
-df_results <- data.frame(base_resp = br_values) 
+df_results <- data.frame() 
 
 ### simulations
-n_sim <- 100   # number of simulation runs
+n_sim <- 95   # number of simulation runs
 
 for (i in 1:n_sim) {
   # simulate new data for each iteration 
@@ -166,11 +156,11 @@ for (i in 1:n_sim) {
     significance_test(df_exp, b, alpha_adj)
   })
   
-  # add results as a new column for each simulation iteration
-  df_results[[paste0("Significance test ", i)]] <- results
+  # add results as a new row for each simulation iteration
+  df_results <- rbind(df_results, results)
+  colnames(df_results) <- br_values
 }
 
-### compute the percentage of TRUE per row
-sim_cols <- grep("^Significance test", names(df_results))
-df_results$TRUE_percentage <- rowMeans(df_results[, sim_cols])
-
+### compute the percentage of TRUE for each base_resp value
+percent_true <- colMeans(df_results)
+print(round(percent_true, 2))
