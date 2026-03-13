@@ -1,3 +1,9 @@
+## Version 0.7.0
+
+- created and exported plots for atomic functions
+- exported plot of psi-function
+- minor adjustments
+
 ## Version 0.6.1
 
 - updated VAST to include base_resp
