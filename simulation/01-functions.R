@@ -9,23 +9,23 @@
 #' @return The identity compartmentalization score for the given anonymity values,
 #'         on a scale from 0 to 1.
 
-IC_function <- function(anonymity) {
+CS_function <- function(anonymity) {
   comp <- (anonymity^2)/(anonymity^2+(1-anonymity)^2)
   return(comp)
 }
 
 ## Überprüfung mit Vektor
 vector <- c(0.2, 0.5, 0.8)
-IC_function(vector)
+CS_function(vector)
 
 #--------------------------------------------------------------------
-#' Felt responsibility as a function of identity compartmentalization
+#' Felt responsibility as a function of compartmentalized self
 #'
 #' Felt responsibility is modeled as a decreasing, non-linear function of
-#' identity compartmentalization. Higher compartmentalization reduces felt
+#' compartmentalized self. Higher compartmentalization reduces felt
 #' responsibility relative to a baseline level.
 #'
-#' @param comp The degree of identity compartmentalization, on a scale from 0 to 1.
+#' @param comp The degree of self-compartmentalization, on a scale from 0 to 1.
 #'            
 #' @param base_resp The baseline tendency to assume responsibility for one's actions on a scale from 0 to 1.
 #'
@@ -107,8 +107,8 @@ SD_function <- function(feltresp, courage, MOD) {
 #' Calculate state disinhibition as a psi-function
 #'
 #' State disinhibition is modeled as the outcome variable of all
-#' exogenous variables. This function shows how the model would behave 
-#' if it was deterministic
+#' exogenous variables. This function shows how the model behaves after
+#' combining the atomic functions.
 #'
 #' @param anonymity The degree of anonymity, on a scale from 0 to 1.
 #'                 
@@ -123,7 +123,7 @@ SD_function <- function(feltresp, courage, MOD) {
 #' @return The state disinhibition score for the given parameters, on a scale from 0 to 1.
 
 psi_function <- function(anonymity, cues, MOD, base_resp) {
-  comp <- IC_function(anonymity)
+  comp <- CS_function(anonymity)
   feltresp <- FR_function(comp, base_resp)
   concern <- CAI_function(cues)
   courage <- CE_function(concern)
@@ -152,7 +152,7 @@ psi_function <- function(anonymity, cues, MOD, base_resp) {
 #'         parameters, as values on a scale from 0 to 1.
 
 curse_function <- function(anonymity, cues, MOD, base_resp) {
-  comp <- IC_function(anonymity)
+  comp <- CS_function(anonymity)
   feltresp <- FR_function(comp, base_resp)
   concern <- CAI_function(cues)
   courage <- CE_function(concern)
