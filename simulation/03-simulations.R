@@ -1,6 +1,8 @@
 #1. simulating data
 source("simulation/01-functions.R")
+library(ggplot2)
 set.seed(41)
+
 
 n = 30
 df <- expand.grid(
