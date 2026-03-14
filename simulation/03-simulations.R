@@ -44,12 +44,13 @@ p1 = ggplot(df, aes(x = anonymity, y = bad_sentence_percentage, color = factor(c
                position = position_dodge(width = 0.1)) +
   labs(
     x="Anonymity",
-    y="Curse word sentence percentage",
+    y="Percentage of curse words",
     color="Interpersonal cues"
   ) +
   theme_minimal()
 print(p1) # plot with anonymity and cues as IV showing 
           # the mean differences between groups
+ggsave("simulation/plots/means_plot_simulation.png")
 
 p2 = ggplot(df, aes(x = factor(anonymity), y = bad_sentence_percentage, color = factor(cues)))+
   geom_boxplot() + 
