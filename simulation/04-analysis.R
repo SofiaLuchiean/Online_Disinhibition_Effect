@@ -53,8 +53,3 @@ print(bz_cues)
 bz_interaction <- round(summary_fit_z$coefficients[4,1],2)
 print(bz_interaction)
 confint(fit_z)
-
-
-
-
-

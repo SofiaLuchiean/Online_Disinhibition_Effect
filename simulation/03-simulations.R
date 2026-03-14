@@ -7,8 +7,8 @@ set.seed(4)
 n = 35 # n per condition
 df <- expand.grid(
   id = 1:n,
-  anonymity = c(0.2, 0.8),
-  cues = c(0.2, 0.8)
+  anonymity = c(0, 1),
+  cues = c(0, 1)
 )
 
 df$MOD <- round((rbeta(nrow(df), 1.6, 1.7)*4 + 1), 2) #simulated MOD values
@@ -16,24 +16,6 @@ df$MOD <- round((rbeta(nrow(df), 1.6, 1.7)*4 + 1), 2) #simulated MOD values
 df$base_resp <- round(rbeta(nrow(df), 6.6, 1.38), 2) #simulated base responsibility values
 
 df$bad_sentence_percentage <- round(curse_function(df$anonymity, df$cues, df$MOD, df$base_resp),2) #simulated disinhibited behavior
-
-
-# descriptive statistics
-## AN 0.2, IC 0.2
-mean(df[df$anonymity == 0.2 & df$cues == 0.2, ]$bad_sentence_percentage)
-sd(df[df$anonymity == 0.2 & df$cues == 0.2, ]$bad_sentence_percentage)
-
-## AN 0.8, IC 0.2
-mean(df[df$anonymity == 0.8 & df$cues == 0.2, ]$bad_sentence_percentage)
-sd(df[df$anonymity == 0.8 & df$cues == 0.2, ]$bad_sentence_percentage)
-
-## AN 0.2, IC 0.8
-mean(df[df$anonymity == 0.2 & df$cues == 0.8, ]$bad_sentence_percentage)
-sd(df[df$anonymity == 0.2 & df$cues == 0.8, ]$bad_sentence_percentage)
-
-## AN 0.8, IC 0.8
-mean(df[df$anonymity == 0.8 & df$cues == 0.8, ]$bad_sentence_percentage)
-sd(df[df$anonymity == 0.8 & df$cues == 0.8, ]$bad_sentence_percentage)
 
 
 # plots with simulated data
