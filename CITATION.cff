@@ -28,15 +28,17 @@ authors:
     email: schlieben.am@campus.lmu.de
     affiliation: Ludwig-Maximilians-Universität München
 repository-code: >-
-  https://github.com/amelieschlieben/Online-Disinhibition-Effect
+  https://github.com/SofiaLuchiean/Online_Disinhibition_Effect
 abstract: >-
-  A formal model that explains why individuals often behave
-  more intensely in online environments compared to
-  face-to-face situations
+  A formal model of the Online Disinhibition Effect. It aims
+  to explain the psychological mechanisms behind why individuals often 
+  behave more intensely in online environments compared to face-to-face 
+  situations. Specifically, this model focuses on two characteristics
+  of online environments: anonymity and invisibility.
 keywords:
   - online behavior
   - formal theory
   - computer-mediated communication
 license: CC-BY-4.0
-version: 0.7.0
+version: 0.8.0
 date-released: '2025-12-12'

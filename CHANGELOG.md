@@ -1,3 +1,11 @@
+## Version 0.8.0
+
+- updated and created new plots
+- updated VAST
+- changed AN and IC values for simulated experiments
+- updated CFF
+
+
 ## Version 0.7.0
 
 - created and exported plots for atomic functions
