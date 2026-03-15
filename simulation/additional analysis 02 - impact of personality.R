@@ -6,14 +6,16 @@
 library(ggplot2)
 library(multcomp)
 source("simulation/01-functions.R")
+source("simulation/03-simulations.R")
+set.seed(4)
 
 # 1. deterministic model
 ## define levels to be plotted 
 ## covering the entire range of base_resp in small intervals
 df_det <- expand.grid(
-  anonymity = c(0.2, 0.8),
-  cues = c(0.2, 0.8),
-  MOD = 2.9, # mean MOD-score in the population
+  anonymity = seq(0, 1, by = 0.1),   
+  cues = c(0, 0.5, 1),  
+  MOD = mean(df$MOD), # mean MOD-score in the simulated sample
   base_resp = seq(0, 1, by = 0.1)
   )
 
@@ -29,25 +31,25 @@ df_det$state_disinhibition <- round(psi_function(
 ggplot(df_det, aes(x= anonymity, y = state_disinhibition, color = factor(cues))) +
   facet_wrap(~ base_resp) +
   geom_line() +
-  geom_point() +
   labs(
     x="Anonymity",
     y="State Disinhibition",
     color="Interpersonal cues"
   ) +
-  theme_bw()
+  theme_minimal()
+ggsave("simulation/plots/det_model_by_baseresp.png")
 
 ## the deterministic model always produces the effect, since base_resp has no influence
-## on the main effect of cues, which is built into the mathematical model 
+## on the main effect of IC, which is built into the mathematical model 
 
 # -------------------------------------------------------------------
 
 # 2. simulation of an experiment for different base_resp values
-n = 30  # number of individuals per condition
+n = 35  # number of individuals per condition
 df_exp <- expand.grid(
   id = 1:n,
-  anonymity = c(0.2, 0.8),
-  cues = c(0.2, 0.8),
+  anonymity = c(0, 1),
+  cues = c(0, 1),
   base_resp = seq(0, 1, by = 0.1)
 )
 df_exp$MOD <- round((rbeta(nrow(df_exp), 1.6, 1.7)*4 + 1), 2) 
@@ -62,7 +64,7 @@ ggplot(df_exp, aes(x = factor(anonymity), y = bad_sentence_percentage, color = f
     y="Bad sentence percentage",
     color="Interpersonal cues"
   ) +
-  theme_bw()
+  theme_minimal()
 
 
 # 3. statistical analysis
@@ -138,14 +140,14 @@ br_values <- seq(0, 1, by = 0.1)
 df_results <- data.frame() 
 
 ### simulations
-n_sim <- 95   # number of simulation runs
+n_sim <- 100   # number of simulation runs
 
 for (i in 1:n_sim) {
   # simulate new data for each iteration 
   df_exp <- expand.grid(
     id = 1:n, 
-    anonymity = c(0.2, 0.8),
-    cues = c(0.2, 0.8),
+    anonymity = c(0, 1),
+    cues = c(0, 1),
     base_resp = seq(0, 1, by = 0.1)
   )
   df_exp$MOD <- round((rbeta(nrow(df_exp), 1.6, 1.7)*4 + 1), 2) 
