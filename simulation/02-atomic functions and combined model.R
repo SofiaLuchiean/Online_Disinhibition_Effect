@@ -87,7 +87,7 @@ ggplot(plot_data, aes(x= anonymity, y = state_disinhibition, color = factor(cues
   geom_line() +
   labs(
     x="Anonymity",
-    y="State Online Disinhibition",
+    y="State Disinhibition",
     color="Interpersonal cues"
   ) +
   theme_minimal() +

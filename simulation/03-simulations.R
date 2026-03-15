@@ -1,4 +1,4 @@
-# simulating data
+# simulate data
 source("simulation/01-functions.R")
 library(ggplot2)
 set.seed(4)
