@@ -1,12 +1,12 @@
-#' Compute identity compartmentalization from anonymity
+#' Compute compartmentalized self from anonymity
 #'
-#' Identity compartmentalization is modeled as a non-linear transformation
+#' Compartmentalized self is modeled as a non-linear transformation
 #' of anonymity. The function maps anonymity values to a compartmentalization
 #' score using a squared-ratio, yielding values between 0 and 1.
 #'
 #' @param anonymity The degree of anonymity, on a scale from 0 to 1.
 #'
-#' @return The identity compartmentalization score for the given anonymity values,
+#' @return The compartmentalized self score for the given anonymity values,
 #'         on a scale from 0 to 1.
 
 CS_function <- function(anonymity) {
