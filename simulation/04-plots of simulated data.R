@@ -29,5 +29,3 @@ p2 = ggplot(df, aes(x = factor(anonymity), y = bad_sentence_percentage, color = 
 print(p2) # box plot for visualizing distribution of the outcome 
           # variable between groups
 ggsave("simulation/plots/box_plot_simulation.png")
-
-
