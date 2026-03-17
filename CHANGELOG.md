@@ -1,3 +1,8 @@
+## Version 1.0.0
+
+- finalized manuscript
+- ready for release
+
 ## Version 0.9.0
 
 - added supplementary tables
