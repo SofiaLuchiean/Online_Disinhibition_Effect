@@ -1,7 +1,9 @@
 source("simulation/01-functions.R")
 library(ggplot2)
 
-# plots of atomic functions
+# plots of atomic functions 
+# this code creates plots and saves them under/simulation/plots. To
+# view plot without saving the file, run the curve() function only
 ## Compartmentalized Self
 png(filename = "simulation/plots/CS_function.png", width = 800, height = 600)
 par(mar = c(6, 6, 4, 2)) 
@@ -96,6 +98,3 @@ ggplot(plot_data, aes(x= anonymity, y = state_disinhibition, color = factor(cues
     axis.text.y  = element_text(size = 7)    
   )
 ggsave("simulation/plots/model_output.png")
-
-
-
