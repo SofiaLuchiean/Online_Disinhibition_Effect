@@ -1,3 +1,7 @@
+## Version 0.8.2
+
+- added manuscript
+
 ## Version 0.8.1
 
 - added IDs to VAST
