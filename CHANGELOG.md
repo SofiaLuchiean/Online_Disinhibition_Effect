@@ -1,3 +1,8 @@
+## Version 0.9.0
+
+- added supplementary tables
+- added README for /simulation
+
 ## Version 0.8.2
 
 - added manuscript
