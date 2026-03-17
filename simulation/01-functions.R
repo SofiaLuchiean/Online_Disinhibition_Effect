@@ -41,13 +41,13 @@ FR_function(vector,vector)
 
 
 #---------------------------------------------------------------------
-#' Calculate concern about impression on others from number of interpersonal cues
+#' Calculate concern about impression on others from interpersonal cues
 #'
 #' Concern about impression on others is modeled as a direct function of the
-#' number of interpersonal cues. Higher values of interpersonal cues correspond
+#' interpersonal cues. Higher values of interpersonal cues correspond
 #' to higher concern about impression on others.
 #'
-#' @param cues The number of interpersonal cues, on a scale from 0 to 1.
+#' @param cues The proportion of interpersonal cues, on a scale from 0 to 1.
 #'
 #' @return The concern about impression on others for the given cues,
 #'         on a scale from 0 to 1.
@@ -112,7 +112,7 @@ SD_function <- function(feltresp, courage, MOD) {
 #'
 #' @param anonymity The degree of anonymity, on a scale from 0 to 1.
 #'                 
-#' @param cues The number of interpersonal cues, on a scale from 0 to 1.
+#' @param cues The proportion of interpersonal cues, on a scale from 0 to 1.
 #'                
 #' @param MOD measure of online disinhibition (MOD), on a scale from 1 to 5.
 #'      
@@ -141,7 +141,7 @@ psi_function <- function(anonymity, cues, MOD, base_resp) {
 #'
 #' @param anonymity The degree of anonymity, on a scale from 0 to 1.
 #'                  
-#' @param cues The number of interpersonal cues, on a scale from 0 to 1.
+#' @param cues The proportion of interpersonal cues, on a scale from 0 to 1.
 #'        
 #' @param MOD measure of online disinhibition (MOD), on a scale from 1 to 5.
 #'      
