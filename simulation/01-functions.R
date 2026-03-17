@@ -14,7 +14,7 @@ CS_function <- function(anonymity) {
   return(comp)
 }
 
-## Überprüfung mit Vektor
+## Test whether the function works in a vectorized way
 vector <- c(0.2, 0.5, 0.8)
 CS_function(vector)
 
@@ -36,7 +36,7 @@ FR_function <- function(comp, base_resp) {
   return(feltresp)
 }
 
-## Überprüfung mit Vektor
+## Test whether the function works in a vectorized way
 FR_function(vector,vector)
 
 
@@ -57,7 +57,7 @@ CAI_function <- function(cues) {
   return(concern)
 }
 
-## Überprüfung mit Vektor
+## Test whether the function works in a vectorized way
 CAI_function(vector)
 
 
@@ -77,7 +77,7 @@ CE_function <- function(concern) {
   return(courage)
 }
 
-# Überprüfung mit Vektor 
+## Test whether the function works in a vectorized way
 CE_function(vector)
 
 
@@ -162,3 +162,4 @@ curse_function <- function(anonymity, cues, MOD, base_resp) {
   bad_sentence_percentage[bad_sentence_percentage < 0] <- 0
   return(bad_sentence_percentage)
 }
+
