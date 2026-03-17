@@ -1,8 +1,8 @@
 # goal: model accountability distribution in the population
 # raw data from https://osf.io/gv6zs/files/tmkaw
 
-# Witvliet, C. V., Johnson, B. R., Roberts, R., Jang, S., 
-# Evans, C. S., Peteet, J., … Bradshaw, M. (2025, March 28). 
+# Witvliet, C. V. O., Johnson, B. R., Roberts, R., Jang, S. J., Evans, C. S., 
+# Peteet, J., Berry, J. W., Leman, J., Torrance, A., & Bradshaw, M. (2022). 
 # Transcendent Accountability Scale Development Data and Materials. 
 # https://doi.org/10.17605/OSF.IO/GV6ZS
 
