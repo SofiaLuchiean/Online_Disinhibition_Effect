@@ -1,3 +1,8 @@
+## Version 0.8.1
+
+- added IDs to VAST
+
+
 ## Version 0.8.0
 
 - updated and created new plots
